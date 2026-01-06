@@ -8,12 +8,8 @@
 <header class="site-header">
   <nav class="nav">
     <a href="/">Home</a>
-    <input class="js-search" type="text" placeholder="Search...">
-    {% if site.primary_links %}
-    {% for link in site.primary_links %}
-    <a href="{{ link.url }}"{% if link.blank %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
-    {% endfor %}
-    {% endif %}
+    <a href="{{ site.list_url or '/archive/' }}">Archive</a>
+    <button class="js-search" type="button" aria-label="Search">Search</button>
     {% if features.subscriber %}
     <a class="js-subscribe" href="#">Subscribe</a>
     {% endif %}
