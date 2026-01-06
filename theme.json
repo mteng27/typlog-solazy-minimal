@@ -4,5 +4,12 @@
   "title": "Solazy Minimal",
   "description": "A super minimal Typlog theme inspired by blog.solazy.me",
   "author": "马腾",
-  "license": "MIT"
+  "license": "MIT",
+  "repo": "mteng27/typlog-solazy-minimal",
+  "templates": [
+    "home.j2",
+    "list.j2",
+    "item.j2",
+    "page.j2"
+  ]
 }
