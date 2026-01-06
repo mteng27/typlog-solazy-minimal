@@ -1,0 +1,30 @@
+{% block title %}{{ page.title }} - {{ site.name }}{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ static_url }}minimal.css">
+{% endblock %}
+
+{% block body %}
+<header class="site-header">
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/feed/">RSS</a>
+  </nav>
+</header>
+<main class="container">
+  <h1 class="page-title">{{ page.title }}</h1>
+  <ul class="post-list">
+    {% for item in page.items %}
+    <li class="post-item">
+      <a href="{{ item.url }}" class="post-title">{{ item.title }}</a>
+      <span class="post-date"><time datetime="{{ item.published_at|xmldatetime }}">{{ item.published_at.strftime('%Y-%m-%d') }}</time></span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% from "macros.j2" import render_navigation %}
+  {{ render_navigation(site, page) }}
+</main>
+<footer class="site-footer">
+  {% include "_snippets/site_foot.j2" %}
+</footer>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% block title %}{{ site.name }}{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ static_url }}minimal.css">
+{% endblock %}
+
+{% block body %}
+<header class="site-header">
+  <nav class="nav">
+    <a href="/">Home</a>
+    {% if site.primary_links %}
+    {% for link in site.primary_links %}
+    <a href="{{ link.url }}"{% if link.blank %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+    {% endfor %}
+    {% endif %}
+    {% if features.subscriber %}
+    <a class="js-subscribe" href="#">Subscribe</a>
+    {% endif %}
+    <a href="/feed/">RSS</a>
+  </nav>
+</header>
+<main class="container">
+  {% if site.summary %}
+  <p class="site-summary">{{ site.summary }}</p>
+  {% endif %}
+
+  <ul class="post-list">
+    {% for item in query.latest_subjects('post', count=10) %}
+    <li class="post-item">
+      <a href="{{ item.url }}" class="post-title">{{ item.title }}</a>
+      <span class="post-date"><time datetime="{{ item.published_at|xmldatetime }}">{{ item.published_at.strftime('%Y-%m-%d') }}</time></span>
+    </li>
+    {% endfor %}
+  </ul>
+</main>
+<footer class="site-footer">
+  {% include "_snippets/site_foot.j2" %}
+</footer>
+{% endblock %}

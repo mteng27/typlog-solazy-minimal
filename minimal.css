@@ -1,0 +1,25 @@
+/* Solazy Minimal CSS */
+:root{ --fg:#111; --bg:#fff; --muted:#666; --link:#0066cc; }
+@media(prefers-color-scheme:dark){ :root{ --fg:#eaeaea; --bg:#0e0e0e; --muted:#999; --link:#66aaff; } }
+html,body{ padding:0; margin:0; color:var(--fg); background:var(--bg); font:16px/1.7 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji"; }
+.container{ max-width:740px; margin:0 auto; padding:32px 20px; }
+.site-header{ border-bottom:1px solid rgba(0,0,0,0.06); }
+.nav{ display:flex; gap:16px; padding:14px 20px; align-items:center; flex-wrap:wrap; }
+.nav a{ color:var(--fg); text-decoration:none; opacity:0.9; }
+.nav a:hover{ opacity:1; text-decoration:underline; }
+.site-summary{ margin:24px 0 8px; color:var(--muted); }
+.post-list{ list-style:none; padding:0; margin:0; }
+.post-item{ display:flex; justify-content:space-between; align-items:baseline; padding:8px 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+.post-title{ color:var(--fg); text-decoration:none; font-weight:600; }
+.post-title:hover{ color:var(--link); }
+.post-date{ color:var(--muted); font-size:0.9em; }
+.post{ }
+.post-meta{ color:var(--muted); margin-bottom:12px; }
+.tag{ color:var(--muted); text-decoration:none; }
+.tag:hover{ color:var(--link); }
+.post-content{ margin-top:24px; }
+.post-content img{ max-width:100%; height:auto; }
+.post-content pre{ padding:12px; border:1px solid rgba(0,0,0,0.08); border-radius:6px; overflow:auto; }
+.pager{ display:flex; justify-content:space-between; margin-top:32px; }
+.pager a{ color:var(--link); text-decoration:none; }
+.site-footer{ color:var(--muted); font-size:0.9em; padding:24px 20px; border-top:1px solid rgba(0,0,0,0.06); }
