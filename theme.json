@@ -1,6 +1,6 @@
 {
   "name": "solazy-minimal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "title": "Solazy Minimal",
   "description": "A super minimal Typlog theme inspired by blog.solazy.me",
   "author": "马腾",
@@ -10,6 +10,9 @@
     "home.j2",
     "list.j2",
     "item.j2",
-    "page.j2"
+    "page.j2",
+    "lang.j2",
+    "tag.j2",
+    "author.j2"
   ]
 }
