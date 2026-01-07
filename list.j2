@@ -29,7 +29,7 @@
     <h1 class="page-title">标签: {{ tag.name }}</h1>
     {% elif author %}
     <h1 class="page-title">作者: {{ author.name }}</h1>
-    {% elif query.category %}
+    {% elif query and query.category %}
     <h1 class="page-title">分类: {{ query.category }}</h1>
     {% else %}
     <h1 class="page-title">长文 · 精心整理</h1>
