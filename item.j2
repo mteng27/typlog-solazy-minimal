@@ -42,7 +42,7 @@
       </header>
 
       <div class="article-content">
-        {{ item.content|markdown|safe }}
+        {{ item.content|safe }}
       </div>
 
       {% if item.tags %}
