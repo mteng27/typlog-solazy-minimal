@@ -2,8 +2,8 @@
   "name": "solazy",
   "name#zh": "简约",
   "author": "Mateng",
-  "repo": "mateng/solazy-theme",
-  "version": "1.0.4",
+  "repo": "mteng27/typlog-solazy-minimal",
+  "version": "1.0.5",
   "templates": [
     "home.j2",
     "list.j2",
