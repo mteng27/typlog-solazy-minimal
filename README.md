@@ -14,10 +14,10 @@
 1. **上传到 GitHub**
    - 将整个主题目录（包含 `theme.json`、`*.j2`、`css/app.css` 等）放到一个 **公开** GitHub 仓库，例如 `mteng27/typlog-solazy-minimal`。
 2. **打版本号 Tag**
-   - 版本号与 `theme.json` 对应（当前为 `1.0.5`）：
+   - 版本号与 `theme.json` 对应（当前为 `1.0.6`）：
    ```bash
-   git tag 1.0.5
-   git push origin 1.0.5
+   git tag 1.0.6
+   git push origin 1.0.6
    ```
 3. **在 Typlog 后台启用**
    - 进入 Typlog 控制台 → **设置 → 主题与设计（Themes & Design）**

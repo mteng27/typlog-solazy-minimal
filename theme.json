@@ -3,7 +3,7 @@
   "name#zh": "简约",
   "author": "Mateng",
   "repo": "mteng27/typlog-solazy-minimal",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "templates": [
     "home.j2",
     "list.j2",
