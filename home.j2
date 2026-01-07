@@ -1,36 +1,63 @@
-{% block title %}{{ site.name }}{% endblock %}
-
 {% block style %}
-<link rel="stylesheet" href="{{ static_url }}minimal.css">
+<link rel="stylesheet" href="{{ static_url('css/app.css') }}">
 {% endblock %}
 
 {% block body %}
-<header class="site-header">
-  <nav class="nav">
-    <a href="/">Home</a>
-    <a href="{{ site.list_url or '/archive/' }}">Archive</a>
-    <button class="js-search" type="button" aria-label="Search">Search</button>
-    {% if features.subscriber %}
-    <a class="js-subscribe" href="#">Subscribe</a>
-    {% endif %}
-    <a href="/feed/">RSS</a>
-  </nav>
-</header>
-<main class="container">
-  {% if site.summary %}
-  <p class="site-summary">{{ site.summary }}</p>
-  {% endif %}
+<div class="container">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="{{ site.base_url }}" class="site-logo">{{ site.name }}</a>
+      <nav class="site-nav">
+        <a href="{{ site.base_url }}">Home</a>
+        {% if site.posts_url %}
+        <a href="{{ site.posts_url }}">Article</a>
+        {% endif %}
+        {% if site.audios_url %}
+        <a href="{{ site.audios_url }}">Audio</a>
+        {% endif %}
+        <a href="{{ site.list_url }}">Archive</a>
+        {% for link in site.primary_links %}
+        <a href="{{ link.url }}"{% if link.blank %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+        {% endfor %}
+        <a href="{{ site.base_url }}feed.xml">RSS</a>
+      </nav>
+    </div>
+  </header>
 
-  <ul class="post-list">
-    {% for item in query.latest_subjects('post', count=10) %}
-    <li class="post-item">
-      <a href="{{ item.url }}" class="post-title">{{ item.title }}</a>
-      <span class="post-date"><time datetime="{{ item.published_at|xmldatetime }}">{{ item.published_at.strftime('%Y-%m-%d') }}</time></span>
-    </li>
-    {% endfor %}
-  </ul>
-</main>
-<footer class="site-footer">
-  {% include "_snippets/site_foot.j2" %}
-</footer>
+  <main class="site-main">
+    {% if site.summary %}
+    <section class="site-intro">
+      <h1 class="site-title">{{ site.name }}</h1>
+      <p class="site-summary">{{ site.summary }}</p>
+    </section>
+    {% endif %}
+
+    {% if page.items %}
+    <section class="home-latest">
+      <h2 class="section-title">Latest</h2>
+      <ul class="post-list">
+        {% for item in page.items %}
+        <li class="post-item">
+          <time class="post-date" datetime="{{ item.pub_date|xmldatetime }}">
+            {{ item.pub_date.strftime('%Y-%m-%d') }}
+          </time>
+          <a href="{{ item.url }}" class="post-title-link">{{ item.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Post with ❤️ by {{ site.name }}</p>
+    {% if site.secondary_links %}
+    <nav class="footer-nav">
+      {% for link in site.secondary_links %}
+      <a href="{{ link.url }}"{% if link.blank %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+      {% endfor %}
+    </nav>
+    {% endif %}
+  </footer>
+</div>
 {% endblock %}

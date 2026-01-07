@@ -1,42 +1,69 @@
-{% block title %}{{ page.title }} - {{ site.name }}{% endblock %}
+{% block title %}{{ item.title }} - {{ site.name }}{% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ static_url }}minimal.css">
+<link rel="stylesheet" href="{{ static_url('css/app.css') }}">
 {% endblock %}
 
 {% block body %}
-<header class="site-header">
-  <nav class="nav">
-    <a href="/">Home</a>
-    <a href="/feed/">RSS</a>
-  </nav>
-</header>
-<main class="container">
-  <article class="post">
-    <h1 class="post-title">{{ page.title }}</h1>
-    <div class="post-meta">
-      <time datetime="{{ page.published_at|xmldatetime }}">{{ page.published_at.strftime('%Y-%m-%d') }}</time>
-      {% if page.tags %}
-      · {% for tag in page.tags %}<a class="tag" href="{{ tag.url }}">#{{ tag.title }}</a>{% if not loop.last %} {% endif %}{% endfor %}{% endif %}
+<div class="container">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="{{ site.base_url }}" class="site-logo">{{ site.name }}</a>
+      <nav class="site-nav">
+        <a href="{{ site.base_url }}">Home</a>
+        {% if site.posts_url %}
+        <a href="{{ site.posts_url }}">Article</a>
+        {% endif %}
+        {% if site.audios_url %}
+        <a href="{{ site.audios_url }}">Audio</a>
+        {% endif %}
+        <a href="{{ site.list_url }}">Archive</a>
+        {% for link in site.primary_links %}
+        <a href="{{ link.url }}"{% if link.blank %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+        {% endfor %}
+        <a href="{{ site.base_url }}feed.xml">RSS</a>
+      </nav>
     </div>
-    {% from "macros.j2" import render_subject_content, render_subject_authors %}
-    {{ render_subject_content(site, page) }}
-    {{ render_subject_authors(site, page) }}
-    {% include "_snippets/subject_share.j2" %}
-    {% include "_snippets/subject_foot.j2" %}
-  </article>
-  <nav class="pager">
-    {% if query.previous_subject(page) %}
-    {% set prev = query.previous_subject(page) %}
-    <a class="prev" href="{{ prev.url }}">← {{ prev.title }}</a>
+  </header>
+
+  <main class="site-main">
+    <article>
+      <header class="article-header">
+        <h1 class="article-title">{{ item.title }}</h1>
+        <div class="article-meta">
+          <time datetime="{{ item.pub_date|xmldatetime }}">{{ item.pub_date.strftime('%Y-%m-%d') }}</time>
+          {% if item.authors %}
+          · 
+          {% for author in item.authors %}
+          <span>{{ author.name }}</span>{% if not loop.last %}, {% endif %}
+          {% endfor %}
+          {% endif %}
+        </div>
+      </header>
+
+      <div class="article-content">
+        {{ item.content|markdown|safe }}
+      </div>
+
+      {% if item.tags %}
+      <div class="article-tags">
+        {% for tag in item.tags %}
+        <a href="{{ tag.url }}" class="tag">#{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>Post with ❤️ by {{ site.name }}</p>
+    {% if site.secondary_links %}
+    <nav class="footer-nav">
+      {% for link in site.secondary_links %}
+      <a href="{{ link.url }}"{% if link.blank %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+      {% endfor %}
+    </nav>
     {% endif %}
-    {% if query.next_subject(page) %}
-    {% set next = query.next_subject(page) %}
-    <a class="next" href="{{ next.url }}">{{ next.title }} →</a>
-    {% endif %}
-  </nav>
-</main>
-<footer class="site-footer">
-  {% include "_snippets/site_foot.j2" %}
-</footer>
+  </footer>
+</div>
 {% endblock %}

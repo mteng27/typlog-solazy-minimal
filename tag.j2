@@ -1,28 +1,69 @@
-{% block title %}{{ page.title }} - {{ site.name }}{% endblock %}
 {% block style %}
-<link rel="stylesheet" href="{{ static_url }}minimal.css">
+<link rel="stylesheet" href="{{ static_url('css/app.css') }}">
 {% endblock %}
+
 {% block body %}
-<header class="site-header">
-  <nav class="nav">
-    <a href="/">Home</a>
-    <a href="/feed/">RSS</a>
-  </nav>
-</header>
-<main class="container">
-  <h1 class="page-title">#{{ page.topic.title }}</h1>
-  <ul class="post-list">
-    {% for item in page.items %}
-    <li class="post-item">
-      <a href="{{ item.url }}" class="post-title">{{ item.title }}</a>
-      <span class="post-date"><time datetime="{{ item.published_at|xmldatetime }}">{{ item.published_at.strftime('%Y-%m-%d') }}</time></span>
-    </li>
-    {% endfor %}
-  </ul>
-  {% from "macros.j2" import render_navigation %}
-  {{ render_navigation(site, page) }}
-</main>
-<footer class="site-footer">
-  {% include "_snippets/site_foot.j2" %}
-</footer>
+<div class="container">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="{{ site.base_url }}" class="site-logo">{{ site.name }}</a>
+      <nav class="site-nav">
+        <a href="{{ site.base_url }}">Home</a>
+        {% if site.posts_url %}
+        <a href="{{ site.posts_url }}">Article</a>
+        {% endif %}
+        {% if site.audios_url %}
+        <a href="{{ site.audios_url }}">Audio</a>
+        {% endif %}
+        <a href="{{ site.list_url }}">Archive</a>
+        {% for link in site.primary_links %}
+        <a href="{{ link.url }}"{% if link.blank %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+        {% endfor %}
+        <a href="{{ site.base_url }}feed.xml">RSS</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <h1 class="page-title">标签: {{ tag.name }}</h1>
+
+    {% if page.items %}
+    <ul class="post-list">
+      {% for item in page.items %}
+      <li class="post-item">
+        <time class="post-date" datetime="{{ item.pub_date|xmldatetime }}">
+          {{ item.pub_date.strftime('%Y-%m-%d') }}
+        </time>
+        <a href="{{ item.url }}" class="post-title-link">{{ item.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>暂无文章</p>
+    {% endif %}
+
+    {% if page.has_prev or page.has_next %}
+    <nav class="pagination">
+      {% if page.has_prev %}
+      <a href="{{ page.prev_url }}">← 上一页</a>
+      {% endif %}
+      <span class="current">第 {{ page.page }} 页</span>
+      {% if page.has_next %}
+      <a href="{{ page.next_url }}">下一页 →</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Post with ❤️ by {{ site.name }}</p>
+    {% if site.secondary_links %}
+    <nav class="footer-nav">
+      {% for link in site.secondary_links %}
+      <a href="{{ link.url }}"{% if link.blank %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+      {% endfor %}
+    </nav>
+    {% endif %}
+  </footer>
+</div>
 {% endblock %}
